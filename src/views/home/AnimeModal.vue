@@ -1,5 +1,5 @@
 <script setup>
-    import { faCircleNotch, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
+    import { faCalendarDay, faCheck, faCircleNotch, faPause, faPlay, faQuestion, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import Modal from '../../components/Modal.vue';
     import { reactive, watchEffect } from 'vue';
@@ -74,7 +74,37 @@
         }
     }
 
-    const getStatusIcon = (type) => type === 'C' ? 'Sale' : type === 'D' ? 'Credit' : 'Unknown';
+    const getStatusIcon = (type) => {
+        switch(type) {
+            case 'Ongoing':
+                return faPlay;
+            case 'Completed':
+                return faCheck;
+            case 'Hiatus':
+                return faPause;
+            case 'Cancelled':
+                return faXmark;
+            case 'Not yet aired':
+                return faCalendarDay;
+            default:
+                return faQuestion;
+        }
+    };
+
+    const getStatusClass = (type) => {
+        switch(type) {
+            case 'Ongoing':
+                return 'text-blue-600';
+            case 'Completed':
+                return 'text-green-500';
+            case 'Hiatus':
+                return 'text-orange-500';
+            case 'Cancelled':
+                return 'text-red-500';
+            default:
+                return faQuestion;
+        }
+    };
 </script>
 
 <template>
@@ -94,9 +124,16 @@
                         <span>{{ anime.releaseDate }}</span>
                         <span class="ring-1 ring-white px-2">{{ anime.type }}</span>
                         <span>{{ anime.totalEpisodes }} {{ anime.totalEpisodes > 1 ? 'Episodes' : 'Episode' }}</span>
-                        <span class="ring-1 ring-white px-2">{{ anime.status }}</span>
                         <div>
-                            <FontAwesomeIcon :icon="faStar" class="text-red-600" />
+                            <FontAwesomeIcon
+                                :icon="getStatusIcon(anime.status)"
+                                class="mr-1"
+                                :class="getStatusClass(anime.status)"
+                            />
+                            {{ anime.status }}
+                        </div>
+                        <div>
+                            <FontAwesomeIcon :icon="faStar" class="text-red-600 mr-1" />
                             {{ Math.round(anime.rating + Number.EPSILON) / 10 }}
                         </div>
                     </div>
