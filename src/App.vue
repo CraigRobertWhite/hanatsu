@@ -1,31 +1,18 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './views/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+    <!-- Navbar -->
+    <nav class="max-w-6xl mx-auto py-12 px-4 h-16 flex items-center">
+        <img class="h-10 w-auto mr-8" src="../src/assets/hanatsu-white.svg" alt="放つ">
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto pt-10 pb-12 px-4 md:pb-16">
+        <RouterView />
+    </main>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+<style>
+    nav {
+        background: linear-gradient(90deg, rgba(0,0,0,0) 10%, rgba(30,30,30,1) 50%, rgba(0,0,0,0) 90%) bottom no-repeat;
+        background-size: 100% 2px;
+    }
 </style>
