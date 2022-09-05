@@ -5,7 +5,7 @@
 1. #### free
 2. #### fire
 
-### [Deployment](https://craigrobertwhite.github.io/hanatsu/)
+### [Deployment](https://hanatsu.net)
 
 ### September 4, 2022 Demo
 https://user-images.githubusercontent.com/22895938/188308871-78c26af7-4242-4e0e-bd0f-dca9615248ba.mp4
