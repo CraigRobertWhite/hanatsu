@@ -196,8 +196,13 @@
                                 Error
                             </div>
                             <vds-media v-else class="w-full px-3">
-                                <vds-hls controls :poster="state.openedEpisode.image" class="w-full">
-                                    <video controls :poster="state.openedEpisode.image" crossorigin="anonymous">
+                                <vds-hls controls :poster="state.openedEpisode.image" class="w-full outline-0">
+                                    <video
+                                        controls
+                                        :poster="state.openedEpisode.image"
+                                        crossorigin="anonymous"
+                                        class="outline-0 aspect-video"
+                                    >
                                         <source
                                             :src="state.openedEpisode.video_url"
                                             type="application/x-mpegURL"
