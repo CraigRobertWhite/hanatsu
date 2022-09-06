@@ -50,6 +50,7 @@
     });
 
     const loadEpisode = async (episodeId) => {
+        state.openedEpisode = { id: episodeId };
         state.loadingEpisode = true;
         state.loadingEpisodeError = null;
 
@@ -68,7 +69,6 @@
             };
         } catch (error) {
             state.loadingEpisodeError = error;
-            state.openedEpisode = null;
         } finally {
             state.loadingEpisode = false;
         }
