@@ -1,5 +1,15 @@
 <script setup>
-    import { faCalendarDay, faCheck, faCircleNotch, faPause, faPlay, faQuestion, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
+    import {
+        faCalendarDay,
+        faCheck,
+        faCircleNotch,
+        faPause,
+        faPlay,
+        faQuestion,
+        faStar,
+        faTriangleExclamation,
+        faXmark,
+    } from '@fortawesome/free-solid-svg-icons';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import Modal from './Modal.vue';
     import { reactive, watch, watchEffect } from 'vue';
@@ -112,8 +122,10 @@
         <div v-if="state.loading" class="flex h-24 items-center justify-center">
             <FontAwesomeIcon :icon="faCircleNotch" size="2xl" class="text-red-600 animate-spin" />
         </div>
-        <div v-else-if="state.loadingError">
-            Error
+        <div v-else-if="state.loadingError" class="h-96 flex flex-col items-center justify-center">
+            <FontAwesomeIcon :icon="faTriangleExclamation" size="2xl" class="text-red-600" />
+            <h6 class="sm:text-xl font-medium mt-2 mb-4">An error occurred</h6>
+            <code>{{ state.loadingError }}</code>
         </div>
         <template v-else>
             <div class="relative">
@@ -201,8 +213,13 @@
                                 <div v-if="state.loadingEpisode" class="flex aspect-video items-center justify-center">
                                     <FontAwesomeIcon :icon="faCircleNotch" size="2xl" class="text-red-600 animate-spin" />
                                 </div>
-                                <div v-else-if="state.loadingEpisodeError">
-                                    Error
+                                <div
+                                    v-else-if="state.loadingEpisodeError"
+                                    class="aspect-video flex flex-col items-center justify-center"
+                                >
+                                    <FontAwesomeIcon :icon="faTriangleExclamation" size="2xl" class="text-red-600" />
+                                    <h6 class="sm:text-xl font-medium mt-2 mb-4">An error occurred</h6>
+                                    <code>{{ state.loadingEpisodeError }}</code>
                                 </div>
                                 <vds-media v-else class="w-full px-3">
                                     <vds-hls controls :poster="state.openedEpisode.image" class="w-full outline-0">
