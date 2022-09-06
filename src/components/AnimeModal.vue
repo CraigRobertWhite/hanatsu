@@ -108,7 +108,7 @@
 </script>
 
 <template>
-    <Modal v-if="!!animeId" :is-open="!!animeId" size="md" @close="$emit('update:animeId', null)">
+    <Modal v-if="!!animeId" :is-open="!!animeId" size="md" @close="$emit('update:animeId', null)" class="text-white">
         <div v-if="state.loading" class="flex h-24 items-center justify-center">
             <FontAwesomeIcon :icon="faCircleNotch" size="2xl" class="text-red-600 animate-spin" />
         </div>
@@ -121,7 +121,7 @@
                     @click="$emit('update:animeId', null)"
                     class="absolute right-0 py-2 px-4 m-2 backdrop-blur rounded-lg"
                 >
-                    <FontAwesomeIcon :icon="faXmark" size="2xl" class="text-white" />
+                    <FontAwesomeIcon :icon="faXmark" size="2xl" />
                 </button>
                 <div class="absolute bottom-0 h-20 w-full bg-gradient-to-b from-transparent to-neutral-900"></div>
                 <img
@@ -130,7 +130,7 @@
                     class="w-full h-80 object-cover object-center"
                 >
             </div>
-            <div class="py-4 px-8 text-white space-y-6">
+            <div class="py-4 px-8 space-y-6">
                 <h4 class="text-4xl font-medium">{{ state.anime.title.userPreferred }}</h4>
                 <div class="grid grid-cols-3 gap-4">
                     <div class="col-span-2">
