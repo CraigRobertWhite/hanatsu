@@ -2,7 +2,10 @@
     import { onBeforeMount, onUnmounted, reactive } from 'vue';
     import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-    import AnimeModal from './AnimeModal.vue';
+
+    defineEmits({
+        openAnime: e => typeof e === 'string',
+    });
 
     const state = reactive({
         loading: true,
@@ -11,8 +14,6 @@
         search: '',
         // ---
         trending: {},
-        // ---
-        openedAnime: null,
     });
 
     const load = async () => {
@@ -28,7 +29,6 @@
                 },
             });
             state.trending = await response.json();
-            console.log(state.trending)
         } catch (error) {
             state.error = error;
         } finally {
@@ -46,7 +46,7 @@
             <figure
                 v-for="anime in state.trending.results"
                 :key="anime.id"
-                @click="state.openedAnime = anime"
+                @click="$emit('openAnime', anime.id)"
                 class="relative cursor-pointer rounded-2xl overflow-hidden text-white hover:ring-4
                        hover:ring-neutral-600"
             >
@@ -62,5 +62,4 @@
             </figure>
         </section>
     </article>
-    <AnimeModal :is-open="!!state.openedAnime" :anime="state.openedAnime" @close="state.openedAnime = null" />
 </template>
