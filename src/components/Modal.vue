@@ -3,6 +3,7 @@
 
     defineProps({
         isOpen: { type: Boolean },
+        placement: { type: String, default: 'center', validator: val => ['top', 'center', 'bottom'].includes(val) },
         size: { type: String, default: 'sm', validator: val => ['sm', 'md', 'lg'].includes(val) },
     });
 
@@ -25,7 +26,12 @@
             </TransitionChild>
 
             <div class="fixed z-50 inset-0 overflow-y-auto">
-                <div class="flex items-end sm:items-center justify-center min-h-full p-4">
+                <div class="flex justify-center min-h-full p-4 backdrop-blur-sm"
+                     :class="{
+                        'items-start pt-24': placement === 'top',
+                        'items-center': placement === 'center',
+                        'items-end pb-24': placement === 'bottom',
+                     }">
                     <TransitionChild
                         as="template"
                         enter="ease-out duration-300"
