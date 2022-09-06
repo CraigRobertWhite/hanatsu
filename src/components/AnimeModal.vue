@@ -189,34 +189,44 @@
                             </div>
                         </div>
                         <template v-if="state.openedEpisode?.id === episode.id">
-                            <div v-if="state.loadingEpisode" class="flex h-24 items-center justify-center">
-                                <FontAwesomeIcon :icon="faCircleNotch" size="2xl" class="text-red-600 animate-spin" />
-                            </div>
-                            <div v-else-if="state.loadingEpisodeError">
-                                Error
-                            </div>
-                            <vds-media v-else class="w-full px-3">
-                                <vds-hls controls :poster="state.openedEpisode.image" class="w-full outline-0">
-                                    <video
-                                        controls
-                                        :poster="state.openedEpisode.image"
-                                        crossorigin="anonymous"
-                                        class="outline-0 aspect-video"
-                                    >
-                                        <source
-                                            :src="state.openedEpisode.video_url"
-                                            type="application/x-mpegURL"
-                                        />
-                                        <track
-                                            default
-                                            kind="subtitles"
-                                            srclang="en"
-                                            label="English"
-                                            :src="state.openedEpisode.subtitles_url"
-                                        />
-                                    </video>
-                                </vds-hls>
-                            </vds-media>
+                            <Transition
+                                enter-active-class="duration-300 ease-out"
+                                enter-from-class="transform opacity-0"
+                                enter-to-class="opacity-100"
+                                leave-active-class="duration-200 ease-in"
+                                leave-from-class="opacity-100"
+                                leave-to-class="transform opacity-0"
+                                mode="out-in"
+                            >
+                                <div v-if="state.loadingEpisode" class="flex aspect-video items-center justify-center">
+                                    <FontAwesomeIcon :icon="faCircleNotch" size="2xl" class="text-red-600 animate-spin" />
+                                </div>
+                                <div v-else-if="state.loadingEpisodeError">
+                                    Error
+                                </div>
+                                <vds-media v-else class="w-full px-3">
+                                    <vds-hls controls :poster="state.openedEpisode.image" class="w-full outline-0">
+                                        <video
+                                            controls
+                                            :poster="state.openedEpisode.image"
+                                            crossorigin="anonymous"
+                                            class="outline-0 aspect-video"
+                                        >
+                                            <source
+                                                :src="state.openedEpisode.video_url"
+                                                type="application/x-mpegURL"
+                                            />
+                                            <track
+                                                default
+                                                kind="subtitles"
+                                                srclang="en"
+                                                label="English"
+                                                :src="state.openedEpisode.subtitles_url"
+                                            />
+                                        </video>
+                                    </vds-hls>
+                                </vds-media>
+                            </Transition>
                         </template>
                     </li>
                 </ul>
