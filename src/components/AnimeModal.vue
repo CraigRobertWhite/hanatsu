@@ -139,6 +139,7 @@
                 <button
                     @click="$emit('update:animeId', null)"
                     class="absolute right-0 py-2 px-4 m-2 backdrop-blur rounded-lg"
+                    autofocus
                 >
                     <FontAwesomeIcon :icon="faXmark" size="2xl" />
                 </button>
