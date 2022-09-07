@@ -125,21 +125,24 @@
 </script>
 
 <template>
-    <Modal v-if="!!animeId" :is-open="!!animeId" size="md" @close="$emit('update:animeId', null)" class="text-white">
-        <div v-if="state.loading" class="flex h-24 items-center justify-center">
-            <FontAwesomeIcon :icon="faCircleNotch" size="2xl" class="text-red-600 animate-spin" />
-        </div>
-        <div v-else-if="state.loadingError" class="h-96 flex flex-col items-center justify-center">
-            <FontAwesomeIcon :icon="faTriangleExclamation" size="2xl" class="text-red-600" />
-            <h6 class="sm:text-xl font-medium mt-2 mb-4">An error occurred</h6>
-            <code>{{ state.loadingError }}</code>
-        </div>
-        <template v-else>
+    <template v-if="animeId">
+        <Modal v-if="state.loading" is-open size="sm">
+            <div class="flex h-24 items-center justify-center">
+                <FontAwesomeIcon :icon="faCircleNotch" size="2xl" class="text-red-600 animate-spin" />
+            </div>
+        </Modal>
+        <Modal v-else-if="state.loadingError" is-open size="sm">
+            <div class="h-96 flex flex-col items-center justify-center">
+                <FontAwesomeIcon :icon="faTriangleExclamation" size="2xl" class="text-red-600" />
+                <h6 class="sm:text-xl font-medium mt-2 mb-4">An error occurred</h6>
+                <code>{{ state.loadingError }}</code>
+            </div>
+        </Modal>
+        <Modal v-else is-open size="md" @close="$emit('update:animeId', null)" class="relative text-white">
             <div class="relative">
                 <button
                     @click="$emit('update:animeId', null)"
                     class="absolute right-0 py-2 px-4 m-2 backdrop-blur rounded-lg"
-                    autofocus
                 >
                     <FontAwesomeIcon :icon="faXmark" size="2xl" />
                 </button>
@@ -220,7 +223,11 @@
                                 mode="out-in"
                             >
                                 <div v-if="state.loadingEpisode" class="flex aspect-video items-center justify-center">
-                                    <FontAwesomeIcon :icon="faCircleNotch" size="2xl" class="text-red-600 animate-spin" />
+                                    <FontAwesomeIcon
+                                        :icon="faCircleNotch"
+                                        size="2xl"
+                                        class="text-red-600 animate-spin"
+                                    />
                                 </div>
                                 <div
                                     v-else-if="state.loadingEpisodeError"
@@ -242,6 +249,6 @@
                     </li>
                 </ul>
             </div>
-        </template>
-    </Modal>
+        </Modal>
+    </template>
 </template>
