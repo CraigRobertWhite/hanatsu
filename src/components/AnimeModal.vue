@@ -51,7 +51,6 @@
                 });
                 state.anime = await response.json();
             } catch (error) {
-                console.log(error)
                 state.loadingError = error;
             } finally {
                 state.loading = false;
