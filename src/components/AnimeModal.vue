@@ -13,8 +13,7 @@
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import Modal from './Modal.vue';
     import { reactive, watch, watchEffect } from 'vue';
-    import '@vidstack/player/define/vds-media.js';
-    import '@vidstack/player/define/vds-hls.js';
+    import VideoPlayer from './VideoPlayer.vue';
 
     const props = defineProps({
         animeId: { type: String },
@@ -73,9 +72,18 @@
             const { sources, subtitles } = await response.json();
             state.openedEpisode = {
                 id: episodeId,
-                video_url: sources.find(source => source.quality === 'auto').url,
-                subtitles_url: subtitles.find(subtitle => subtitle.lang === 'English').url,
+                source: sources.find(source => source.isM3U8 && source.quality === 'auto'),
+                tracks: subtitles.filter(track => track.lang !== 'Thumbnails').map(track => ({
+                    url: track.url,
+                    kind: 'subtitles',
+                    label: track.lang,
+                    srclang: track.lang.substring(0, 2).toLowerCase(),
+                    'default': track.lang === 'English',
+                })),
             };
+            if (!state.openedEpisode.source) {
+                throw Error('Failed to find valid source for video')
+            }
         } catch (error) {
             state.loadingEpisodeError = error;
         } finally {
@@ -221,28 +229,13 @@
                                     <h6 class="sm:text-xl font-medium mt-2 mb-4">An error occurred</h6>
                                     <code>{{ state.loadingEpisodeError }}</code>
                                 </div>
-                                <vds-media v-else class="w-full px-3">
-                                    <vds-hls controls :poster="state.openedEpisode.image" class="w-full outline-0">
-                                        <video
-                                            controls
-                                            :poster="state.openedEpisode.image"
-                                            crossorigin="anonymous"
-                                            class="outline-0 aspect-video"
-                                        >
-                                            <source
-                                                :src="state.openedEpisode.video_url"
-                                                type="application/x-mpegURL"
-                                            />
-                                            <track
-                                                default
-                                                kind="subtitles"
-                                                srclang="en"
-                                                label="English"
-                                                :src="state.openedEpisode.subtitles_url"
-                                            />
-                                        </video>
-                                    </vds-hls>
-                                </vds-media>
+                                <VideoPlayer
+                                    v-else
+                                    :thumbnail="episode.image"
+                                    :source="state.openedEpisode.source"
+                                    :tracks="state.openedEpisode.tracks"
+                                    class="px-3"
+                                />
                             </Transition>
                         </template>
                     </li>
