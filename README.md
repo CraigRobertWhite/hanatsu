@@ -2,8 +2,8 @@
 
 # Hanatsu (放つ)
 #### _verb_
-1. #### free
-2. #### fire
+1. #### to free
+2. #### to fire
 
 ### [Deployment](https://hanatsu.net)
 
