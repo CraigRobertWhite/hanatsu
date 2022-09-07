@@ -20,7 +20,7 @@
     });
 
     defineEmits({
-        close: null,
+        'update:animeId': e => e === null || typeof e === 'string',
     });
 
     const state = reactive({
