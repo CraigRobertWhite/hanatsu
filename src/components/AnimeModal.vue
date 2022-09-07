@@ -181,6 +181,7 @@
                         @click="state.openedEpisode?.id !== episode.id && loadEpisode(episode.id)"
                         class="hover:bg-neutral-800"
                         :class="state.openedEpisode?.id === episode.id && 'bg-neutral-800'"
+                        tabindex=0
                     >
                         <div class="p-4 flex items-center cursor-pointer">
                             <h5 class="text-3xl font-medium text-neutral-400 mr-6">{{ episode.number }}</h5>
