@@ -17,7 +17,7 @@
     import '@vidstack/player/define/vds-hls.js';
 
     const props = defineProps({
-        animeId: { type: Object },
+        animeId: { type: String },
     });
 
     defineEmits({
