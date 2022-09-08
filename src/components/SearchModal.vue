@@ -82,12 +82,5 @@
                 </div>
             </li>
         </ul>
-        <button
-            v-if="state.moreResults"
-            class="w-full p-3 hover:bg-neutral-800 border-t border-neutral-800"
-            type="button"
-        >
-            View all results
-        </button>
     </Modal>
 </template>
