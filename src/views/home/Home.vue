@@ -22,7 +22,7 @@
         state.trending = {};
 
         try {
-            const response = await fetch('https://consumet-api.herokuapp.com/meta/anilist/trending?perPage=5', {
+            const response = await fetch('https://consumet-api.herokuapp.com/meta/anilist/trending?perPage=10', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,23 +42,18 @@
 <template>
     <article v-if="state.trending?.results?.length">
         <h4 class="text-2xl font-medium text-white mb-4">Trending</h4>
-        <section class="flex justify-between">
+        <section class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 place-items-center gap-4">
             <figure
                 v-for="anime in state.trending.results"
                 :key="anime.id"
                 @click="$emit('openAnime', anime.id)"
-                class="relative cursor-pointer rounded-2xl overflow-hidden text-white hover:ring-4
-                       hover:ring-neutral-600"
+                class="relative h-60 sm:h-80 w-full cursor-pointer rounded-2xl overflow-hidden text-white hover:ring-4
+                       hover:ring-neutral-600 bg-cover"
+                :style="{ backgroundImage: `url(${anime.image})` }"
             >
-                <div class="absolute bottom-0 w-full p-3 backdrop-blur backdrop-brightness-50">
+                <div class="text-sm sm:text-base absolute bottom-0 w-full p-3 backdrop-blur backdrop-brightness-50">
                     {{ anime.title.romaji }}
                 </div>
-                <img :src="anime.image"
-                     :alt="anime.title.romaji"
-                     class="h-80 w-48 object-cover">
-            </figure>
-            <figure class="h-80 w-12 cursor-pointer rounded-l-2xl bg-neutral-800 flex items-center justify-center">
-                <FontAwesomeIcon :icon="faChevronRight" class="text-gray-100" size="2xl" />
             </figure>
         </section>
     </article>
