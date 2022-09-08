@@ -138,7 +138,13 @@
                 <code>{{ state.loadingError }}</code>
             </div>
         </Modal>
-        <Modal v-else is-open size="md" @close="$emit('update:animeId', null)" class="relative text-white">
+        <Modal
+            v-else
+            is-open
+            size="md"
+            @close="$emit('update:animeId', null)"
+            class="relative text-white text-xs sm:text-base"
+        >
             <div class="relative">
                 <button
                     @click="$emit('update:animeId', null)"
@@ -153,11 +159,11 @@
                     class="w-full h-80 object-cover object-center"
                 >
             </div>
-            <div class="py-4 px-8 space-y-6">
-                <h4 class="text-4xl font-medium">{{ state.anime.title.romaji }}</h4>
-                <div class="grid grid-cols-3 gap-4">
+            <div class="py-4 px-8">
+                <h4 class="text-lg sm:text-4xl font-medium mb-2 sm:mb-4">{{ state.anime.title.romaji }}</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 mb-6">
                     <div class="col-span-2">
-                        <div class="flex items-center space-x-2 mb-8">
+                        <div class="flex items-center space-x-2 mb-6 sm:mb-8">
                             <span>{{ state.anime.releaseDate }}</span>
                             <span class="ring-1 ring-white px-2">{{ state.anime.type }}</span>
                             <span>
@@ -177,14 +183,14 @@
                                 {{ Math.round(state.anime.rating + Number.EPSILON) / 10 }}
                             </div>
                         </div>
-                        <p v-html="state.anime.description"></p>
+                        <p v-html="state.anime.description" class="text-sm sm:text-base"></p>
                     </div>
                     <div class="flex">
                         <span class="text-neutral-500 mr-2">Genres:</span>
                         <p>{{ state.anime.genres.join(', ') }}</p>
                     </div>
                 </div>
-                <h5 class="text-3xl font-medium mb-4">Episodes</h5>
+                <h5 class="text-lg sm:text-2xl font-medium mb-2 sm:mb-4">Episodes</h5>
                 <ul class="divide-y divide-neutral-800">
                     <li
                         v-for="episode in state.anime.episodes"
@@ -195,7 +201,9 @@
                         tabindex=0
                     >
                         <div class="p-4 flex items-center cursor-pointer">
-                            <h5 class="text-3xl font-medium text-neutral-400 mr-6">{{ episode.number }}</h5>
+                            <h5 class="hidden sm:block text-3xl font-medium text-neutral-400 mr-6">
+                                {{ episode.number }}
+                            </h5>
                             <div class="flex items-center">
                                 <img
                                     :src="episode.image"
@@ -203,15 +211,18 @@
                                     class="h-16 w-32 object-cover object-center mr-4"
                                 >
                                 <div>
-                                    <h6 class="text-lg font-medium">
+                                    <h6 class="sm:text-lg font-medium">
                                         {{ episode.title || `Episode ${episode.number}` }}
                                     </h6>
-                                    <p class="text-neutral-200">
+                                    <p class="hidden sm:block text-neutral-200">
                                         {{ episode.description || 'No Description' }}
                                     </p>
                                 </div>
                             </div>
                         </div>
+                        <p v-if="episode.description" class="sm:hidden text-neutral-200 mb-4 px-4">
+                            {{ episode.description }}
+                        </p>
                         <template v-if="state.openedEpisode?.id === episode.id">
                             <Transition
                                 enter-active-class="duration-300 ease-out"
