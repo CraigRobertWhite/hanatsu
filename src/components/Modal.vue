@@ -40,8 +40,8 @@
                         leave="duration-[0s] hidden"
                     >
                         <DialogPanel
-                            class="w-full bg-neutral-900 rounded-lg overflow-hidden shadow-lg text-center sm:text-left
-                                   transform transition-all mt-4"
+                            class="w-full bg-neutral-900 rounded-lg overflow-hidden shadow-lg transform transition-all
+                                   mt-4"
                             :class="{
                                 'sm:max-w-lg': size === 'sm',
                                 'sm:max-w-4xl': size === 'md',
