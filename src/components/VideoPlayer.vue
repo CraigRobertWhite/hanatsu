@@ -20,7 +20,7 @@
                 controls
                 :poster="thumbnailWithParam"
                 crossorigin="anonymous"
-                class="outline-0 aspect-video"
+                class="outline-0 aspect-video mt-1"
             >
                 <source
                     :src="source.url"
