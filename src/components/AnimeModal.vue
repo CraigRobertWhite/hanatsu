@@ -63,7 +63,7 @@
         state.loadingEpisodeError = null;
 
         try {
-            const response = await fetch(`https://consumet-api.herokuapp.com/anime/zoro/watch?episodeId=${episodeId}`, {
+            const response = await fetch(`https://consumet-api.herokuapp.com/meta/anilist/watch/${episodeId}?provider=zoro`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
