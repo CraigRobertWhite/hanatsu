@@ -14,7 +14,7 @@
 </script>
 
 <template>
-    <vds-media class="w-full">
+    <vds-media class="w-full" tabindex="-1">
         <vds-hls controls :poster="thumbnailWithParam" class="w-full outline-0">
             <video
                 controls
