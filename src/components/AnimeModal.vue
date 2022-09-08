@@ -149,12 +149,12 @@
                 <div class="absolute bottom-0 h-20 w-full bg-gradient-to-b from-transparent to-neutral-900"></div>
                 <img
                     :src="state.anime.cover"
-                    :alt="state.anime.title.userPreferred"
+                    :alt="state.anime.title.romaji"
                     class="w-full h-80 object-cover object-center"
                 >
             </div>
             <div class="py-4 px-8 space-y-6">
-                <h4 class="text-4xl font-medium">{{ state.anime.title.userPreferred }}</h4>
+                <h4 class="text-4xl font-medium">{{ state.anime.title.romaji }}</h4>
                 <div class="grid grid-cols-3 gap-4">
                     <div class="col-span-2">
                         <div class="flex items-center space-x-2 mb-8">

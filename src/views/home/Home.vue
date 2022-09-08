@@ -51,10 +51,10 @@
                        hover:ring-neutral-600"
             >
                 <div class="absolute bottom-0 w-full p-3 backdrop-blur backdrop-brightness-50">
-                    {{ anime.title.userPreferred }}
+                    {{ anime.title.romaji }}
                 </div>
                 <img :src="anime.image"
-                     :alt="anime.title.userPreferred"
+                     :alt="anime.title.romaji"
                      class="h-80 w-48 object-cover">
             </figure>
             <figure class="h-80 w-12 cursor-pointer rounded-l-2xl bg-neutral-800 flex items-center justify-center">

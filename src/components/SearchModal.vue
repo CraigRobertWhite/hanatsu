@@ -77,7 +77,7 @@
                     class="h-40 w-24 object-cover object-center mr-4"
                 >
                 <div class="flex flex-col">
-                    <p class="mb-1">{{ result.title.userPreferred }}</p>
+                    <p class="mb-1">{{ result.title.romaji }}</p>
                     <small class="text-neutral-400">{{ result.releaseDate }} {{ result.format}}</small>
                 </div>
             </li>
