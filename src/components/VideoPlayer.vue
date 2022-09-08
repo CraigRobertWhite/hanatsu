@@ -7,18 +7,14 @@
         source: { type: Object, required: true },
         tracks: { type: Array[Object], default: () => [] },
     });
-
-    // UUID query parameter added to avoid Chromium-based browser caching CORS issues
-    // Source: https://www.hacksoft.io/blog/handle-images-cors-error-in-chrome
-    const thumbnailWithParam = `${props.thumbnail}?${crypto.randomUUID()}`;
 </script>
 
 <template>
     <vds-media class="w-full" tabindex="-1">
-        <vds-hls controls :poster="thumbnailWithParam" class="w-full outline-0">
+        <vds-hls controls :poster="`${thumbnail}?${Math.random()}`" class="w-full outline-0">
             <video
                 controls
-                :poster="thumbnailWithParam"
+                :poster="`${thumbnail}?${Math.random()}`"
                 crossorigin="anonymous"
                 class="outline-0 aspect-video mt-1"
             >
