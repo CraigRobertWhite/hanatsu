@@ -16,7 +16,7 @@
                 controls
                 :poster="`${thumbnail}?${Math.random()}`"
                 crossorigin="anonymous"
-                class="outline-0 aspect-video mt-1"
+                class="outline-0 aspect-video"
             >
                 <source
                     :src="source.url"
