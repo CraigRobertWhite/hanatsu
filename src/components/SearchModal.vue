@@ -47,6 +47,7 @@
                         'Content-Type': 'application/json',
                     },
                 });
+                if (!response.ok) throw Error(response.statusText);
                 const { hasNextPage, results } = await response.json();
                 state.moreResults = hasNextPage;
                 state.results = results;

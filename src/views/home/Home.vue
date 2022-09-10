@@ -40,6 +40,9 @@
                     'Content-Type': 'application/json',
                 },
             });
+            if ([trendingResponse, popularResponse, recentResponse].some(response => !response.ok)) {
+                throw Error(response.statusText);
+            }
             state.categories.push({ name: 'Trending', ...(await trendingResponse.json()) });
             state.categories.push({ name: 'Popular', ...(await popularResponse.json()) });
             state.categories.push({ name: 'Recently Released', ...(await recentResponse.json()) });

@@ -48,6 +48,7 @@
                         'Content-Type': 'application/json',
                     },
                 });
+                if (!response.ok) throw Error(response.statusText);
                 state.anime = await response.json();
             } catch (error) {
                 state.loadingError = error;
@@ -131,7 +132,12 @@
                 <FontAwesomeIcon :icon="faCircleNotch" size="2xl" class="text-red-600 animate-spin" />
             </div>
         </Modal>
-        <Modal v-else-if="state.loadingError" is-open size="sm">
+        <Modal
+            v-else-if="state.loadingError"
+            is-open size="sm"
+            @close="$emit('update:animeId', null)"
+            class="text-white"
+        >
             <div class="h-96 flex flex-col items-center justify-center">
                 <FontAwesomeIcon :icon="faTriangleExclamation" size="2xl" class="text-red-600" />
                 <h6 class="sm:text-xl font-medium mt-2 mb-4">An error occurred</h6>
