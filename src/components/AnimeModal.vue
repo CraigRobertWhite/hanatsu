@@ -226,11 +226,11 @@
                         <template v-if="state.openedEpisode?.id === episode.id">
                             <Transition
                                 enter-active-class="duration-300 ease-out"
-                                enter-from-class="transform opacity-0"
+                                enter-from-class="opacity-0"
                                 enter-to-class="opacity-100"
                                 leave-active-class="duration-200 ease-in"
                                 leave-from-class="opacity-100"
-                                leave-to-class="transform opacity-0"
+                                leave-to-class="opacity-0"
                                 mode="out-in"
                             >
                                 <div v-if="state.loadingEpisode" class="flex aspect-video items-center justify-center">
