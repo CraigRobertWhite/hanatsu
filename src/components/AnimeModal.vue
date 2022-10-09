@@ -229,40 +229,41 @@
                         <p v-if="episode.description" class="sm:hidden text-neutral-200 mb-4 px-4">
                             {{ episode.description }}
                         </p>
-                        <template v-if="state.openedEpisode?.id === episode.id">
-                            <Transition
-                                enter-active-class="duration-300 ease-out"
-                                enter-from-class="opacity-0"
-                                enter-to-class="opacity-100"
-                                leave-active-class="duration-200 ease-in"
-                                leave-from-class="opacity-100"
-                                leave-to-class="opacity-0"
-                                mode="out-in"
+                        <Transition
+                            enter-active-class="duration-300 ease-out"
+                            enter-from-class="opacity-0"
+                            enter-to-class="opacity-100"
+                            leave-active-class="duration-200 ease-in"
+                            leave-from-class="opacity-100"
+                            leave-to-class="opacity-0"
+                            mode="out-in"
+                        >
+                            <div
+                                v-if="state.openedEpisode?.id === episode.id && state.loadingEpisode"
+                                class="flex aspect-video items-center justify-center"
                             >
-                                <div v-if="state.loadingEpisode" class="flex aspect-video items-center justify-center">
-                                    <FontAwesomeIcon
-                                        :icon="faCircleNotch"
-                                        size="2xl"
-                                        class="text-red-600 animate-spin"
-                                    />
-                                </div>
-                                <div
-                                    v-else-if="state.loadingEpisodeError"
-                                    class="aspect-video flex flex-col items-center justify-center"
-                                >
-                                    <FontAwesomeIcon :icon="faTriangleExclamation" size="2xl" class="text-red-600" />
-                                    <h6 class="sm:text-xl font-medium mt-2 mb-4">An error occurred</h6>
-                                    <code>{{ state.loadingEpisodeError }}</code>
-                                </div>
-                                <VideoPlayer
-                                    v-else
-                                    :thumbnail="episode.image"
-                                    :source="state.openedEpisode.source"
-                                    :tracks="state.openedEpisode.tracks"
-                                    class="px-3"
+                                <FontAwesomeIcon
+                                    :icon="faCircleNotch"
+                                    size="2xl"
+                                    class="text-red-600 animate-spin"
                                 />
-                            </Transition>
-                        </template>
+                            </div>
+                            <div
+                                v-else-if="state.openedEpisode?.id === episode.id && state.loadingEpisodeError"
+                                class="aspect-video flex flex-col items-center justify-center"
+                            >
+                                <FontAwesomeIcon :icon="faTriangleExclamation" size="2xl" class="text-red-600" />
+                                <h6 class="sm:text-xl font-medium mt-2 mb-4">An error occurred</h6>
+                                <code>{{ state.loadingEpisodeError }}</code>
+                            </div>
+                            <VideoPlayer
+                                v-else-if="state.openedEpisode?.id === episode.id"
+                                :thumbnail="episode.image"
+                                :source="state.openedEpisode.source"
+                                :tracks="state.openedEpisode.tracks"
+                                class="px-3"
+                            />
+                        </Transition>
                     </li>
                 </ul>
             </div>
