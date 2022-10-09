@@ -1,10 +1,12 @@
 <script setup>
     import '@vidstack/player/define/vds-media.js';
     import '@vidstack/player/define/vds-hls.js';
-    import { useAmazon } from '../modules/amazon.js';
     import { onMounted } from 'vue';
+    import { storageAvailable } from '../util.js';
+    import { useAmazon } from '../modules/amazon.js';
 
-    defineProps({
+    const props = defineProps({
+        anime: { type: Object, required: true },
         thumbnail: { type: String, required: true },
         source: { type: Object, required: true },
         tracks: { type: Array[Object], default: () => [] },
@@ -18,6 +20,15 @@
                 try {
                     await video.requestFullscreen({ navigationUI: 'show' });
                     video.focus();
+                } catch (error) {}
+            }
+            if (storageAvailable('localStorage')) {
+                try {
+                    const progress = JSON.parse(localStorage.getItem('progress'));
+                    localStorage.setItem('progress', JSON.stringify({
+                        ...(progress || {}),
+                        [props.anime.id]: props.anime,
+                    }))
                 } catch (error) {}
             }
         };

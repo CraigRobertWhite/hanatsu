@@ -22,7 +22,7 @@
 
     <!-- Main Content -->
     <main class="max-w-6xl mx-auto pt-10 pb-12 px-4 md:pb-16">
-        <RouterView @open-anime="state.openedAnimeId = $event" />
+        <RouterView :opened-anime-id="state.openedAnimeId" @update:openedAnimeId="(id) => state.openedAnimeId = id" />
     </main>
 
     <AnimeModal :anime-id="state.openedAnimeId" @update:animeId="state.openedAnimeId = $event" />

@@ -258,6 +258,7 @@
                             </div>
                             <VideoPlayer
                                 v-else-if="state.openedEpisode?.id === episode.id"
+                                :anime="state.anime"
                                 :thumbnail="episode.image"
                                 :source="state.openedEpisode.source"
                                 :tracks="state.openedEpisode.tracks"

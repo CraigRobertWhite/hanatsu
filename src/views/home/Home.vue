@@ -1,10 +1,15 @@
 <script setup>
-    import { onBeforeMount, onUnmounted, reactive } from 'vue';
+    import { onBeforeMount, onUnmounted, reactive, watch } from 'vue';
     import { faCircleNotch, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+    import { storageAvailable } from '../../util.js';
+
+    const props = defineProps({
+        openedAnimeId: { type: Object, default: null },
+    })
 
     defineEmits({
-        openAnime: e => typeof e === 'string',
+        'update:openedAnimeId': e => typeof e === 'string',
     });
 
     const state = reactive({
@@ -13,15 +18,30 @@
         // ---
         search: '',
         // ---
-        categories: [],
+        categories: {},
+    });
+
+    const updateContinueWatching = () => {
+        if (storageAvailable('localStorage')) {
+            const progress = localStorage.getItem('progress');
+            if (progress) {
+                state.categories['Continue Watching'] = Object.values(JSON.parse(progress));
+            }
+        }
+    }
+
+    watch(() => props.openedAnimeId, (value) => {
+        if (!value) {
+            updateContinueWatching();
+        }
     });
 
     const load = async () => {
         state.loading = true;
         state.loadingError = null;
-        state.categories = [];
 
         try {
+            updateContinueWatching();
             const trendingResponse = await fetch('https://api.consumet.org/meta/anilist/trending?perPage=10', {
                 method: 'GET',
                 headers: {
@@ -40,13 +60,11 @@
                     'Content-Type': 'application/json',
                 },
             });
-            if ([trendingResponse, popularResponse, recentResponse].some(response => !response.ok)) {
-                throw Error(response.statusText);
-            }
-            state.categories.push({ name: 'Trending', ...(await trendingResponse.json()) });
-            state.categories.push({ name: 'Popular', ...(await popularResponse.json()) });
-            state.categories.push({ name: 'Recently Released', ...(await recentResponse.json()) });
+            state.categories['Trending'] = (await trendingResponse.json()).results;
+            state.categories['Popular'] = (await popularResponse.json()).results;
+            state.categories['Recently Released'] = (await recentResponse.json()).results;
         } catch (error) {
+            console.log(error)
             state.loadingError = error;
         } finally {
             state.loading = false;
@@ -75,13 +93,13 @@
             <code>{{ state.loadingError }}</code>
         </div>
         <div v-else>
-            <article v-for="category in state.categories" :key="category.name" class="mb-12">
-                <h4 class="text-2xl font-medium text-white mb-4">{{ category.name }}</h4>
+            <article v-for="(category, name) in state.categories" :key="name" class="mb-12">
+                <h4 class="text-2xl font-medium text-white mb-4">{{ name }}</h4>
                 <section class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 place-items-center gap-4">
                     <figure
-                        v-for="anime in category.results"
+                        v-for="anime in category"
                         :key="anime.id"
-                        @click="$emit('openAnime', anime.id)"
+                        @click="$emit('update:openedAnimeId', anime.id)"
                         class="h-60 sm:h-80 w-full cursor-pointer rounded-2xl overflow-hidden text-white hover:ring-4
                        hover:ring-neutral-600 bg-cover flex items-end"
                         :style="{ backgroundImage: `url(${anime.image})` }"
