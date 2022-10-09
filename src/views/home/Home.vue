@@ -13,7 +13,7 @@
         // ---
         search: '',
         // ---
-        categories: []
+        categories: [],
     });
 
     const load = async () => {
@@ -22,19 +22,19 @@
         state.categories = [];
 
         try {
-            const trendingResponse = await fetch('https://consumet-api.herokuapp.com/meta/anilist/trending?perPage=10', {
+            const trendingResponse = await fetch('https://api.consumet.org/meta/anilist/trending?perPage=10', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
-            const popularResponse = await fetch('https://consumet-api.herokuapp.com/meta/anilist/popular?perPage=10', {
+            const popularResponse = await fetch('https://api.consumet.org/meta/anilist/popular?perPage=10', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
-            const recentResponse = await fetch('https://consumet-api.herokuapp.com/meta/anilist/recent-episodes?perPage=10', {
+            const recentResponse = await fetch('https://api.consumet.org/meta/anilist/recent-episodes?perPage=10', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

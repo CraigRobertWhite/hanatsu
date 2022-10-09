@@ -42,7 +42,7 @@
             state.openedEpisode = null;
 
             try {
-                const response = await fetch(`https://consumet-api.herokuapp.com/meta/anilist/info/${props.animeId}?provider=zoro`, {
+                const response = await fetch(`https://api.consumet.org/meta/anilist/info/${props.animeId}?provider=zoro`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@
         state.loadingEpisodeError = null;
 
         try {
-            const response = await fetch(`https://consumet-api.herokuapp.com/meta/anilist/watch/${episodeId}?provider=zoro`, {
+            const response = await fetch(`https://api.consumet.org/meta/anilist/watch/${episodeId}?provider=zoro`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

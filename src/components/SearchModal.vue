@@ -41,7 +41,7 @@
             }
 
             try {
-                const response = await fetch(`https://consumet-api.herokuapp.com/meta/anilist/advanced-search?query=${state.search}&perPage=6`, {
+                const response = await fetch(`https://api.consumet.org/meta/anilist/advanced-search?query=${state.search}&perPage=6`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
