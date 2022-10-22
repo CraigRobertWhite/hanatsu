@@ -5,7 +5,7 @@
     import { storageAvailable } from '../../util.js';
 
     const props = defineProps({
-        openedAnimeId: { type: Object, default: null },
+        openedAnimeId: { type: String, default: null },
     })
 
     defineEmits({
