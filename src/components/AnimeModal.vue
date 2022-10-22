@@ -16,7 +16,7 @@
     import VideoPlayer from './VideoPlayer.vue';
 
     const props = defineProps({
-        animeId: { type: String },
+        animeId: { type: String, default: null },
     });
 
     defineEmits({
