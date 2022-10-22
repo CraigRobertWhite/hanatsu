@@ -138,9 +138,16 @@
             @close="$emit('update:animeId', null)"
             class="text-white"
         >
-            <div class="h-96 flex flex-col items-center justify-center">
+            <div class="h-96 flex flex-col items-center justify-center space-y-4">
                 <FontAwesomeIcon :icon="faTriangleExclamation" size="2xl" class="text-red-600" />
-                <h6 class="sm:text-xl font-medium mt-2 mb-4">An error occurred</h6>
+                <h6 class="sm:text-xl font-medium">An error occurred</h6>
+                <button
+                    @click="loadAnime"
+                    class="px-3 py-2 ring-1 ring-white rounded text-white hover:bg-white hover:text-black transition"
+                    type="button"
+                >
+                    Retry
+                </button>
                 <code>{{ state.loadingError }}</code>
             </div>
         </Modal>
@@ -253,7 +260,15 @@
                                 class="aspect-video flex flex-col items-center justify-center"
                             >
                                 <FontAwesomeIcon :icon="faTriangleExclamation" size="2xl" class="text-red-600" />
-                                <h6 class="sm:text-xl font-medium mt-2 mb-4">An error occurred</h6>
+                                <h6 class="sm:text-xl font-medium mt-2">An error occurred</h6>
+                                <button
+                                    @click="loadEpisode(episode.id)"
+                                    class="px-3 py-2 ring-1 ring-white rounded text-white hover:bg-white
+                                           hover:text-black transition my-4"
+                                    type="button"
+                                >
+                                    Retry
+                                </button>
                                 <code>{{ state.loadingEpisodeError }}</code>
                             </div>
                             <VideoPlayer
