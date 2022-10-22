@@ -33,30 +33,34 @@
         openedEpisode: null,
     });
 
-    watchEffect(async() => {
-        if (props.animeId) {
-            state.loading = true;
-            state.loadingEpisode = false;
-            state.loadingError = state.loadingEpisodeError = null;
-            state.anime = null;
-            state.openedEpisode = null;
+    watch(() => props.animeId, (value) => {
+        state.loadingEpisode = false;
+        state.loadingError = state.loadingEpisodeError = null;
+        state.anime = null;
+        state.openedEpisode = null;
 
-            try {
-                const response = await fetch(`https://api.consumet.org/meta/anilist/info/${props.animeId}?provider=zoro`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                if (!response.ok) throw Error(response.statusText);
-                state.anime = await response.json();
-            } catch (error) {
-                state.loadingError = error;
-            } finally {
-                state.loading = false;
-            }
-        }
+        if (value) loadAnime();
     });
+
+    const loadAnime = async () => {
+        state.loading = true;
+        state.loadingError = null;
+
+        try {
+            const response = await fetch(`https://api.consumet.org/meta/anilist/info/${props.animeId}?provider=zoro`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) throw Error(response.statusText);
+            state.anime = await response.json();
+        } catch (error) {
+            state.loadingError = error;
+        } finally {
+            state.loading = false;
+        }
+    }
 
     const loadEpisode = async (episodeId) => {
         state.openedEpisode = { id: episodeId };
@@ -73,8 +77,8 @@
             const { sources, subtitles } = await response.json();
             state.openedEpisode = {
                 id: episodeId,
-                source: sources.find(source => source.isM3U8 && source.quality === 'auto'),
-                tracks: subtitles.filter(track => track.lang !== 'Thumbnails').map(track => ({
+                source: (sources || []).find(source => source.isM3U8 && source.quality === 'auto'),
+                tracks: (subtitles || []).filter(track => track.lang !== 'Thumbnails').map(track => ({
                     url: track.url,
                     kind: 'subtitles',
                     label: track.lang,
