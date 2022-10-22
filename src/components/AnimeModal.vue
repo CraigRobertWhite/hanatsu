@@ -47,7 +47,7 @@
         state.loadingError = null;
 
         try {
-            const response = await fetch(`https://api.consumet.org/meta/anilist/info/${props.animeId}?provider=zoro`, {
+            const response = await fetch(`https://api.consumet.org/meta/anilist/info/${props.animeId}?provider=gogoanime`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,7 +68,7 @@
         state.loadingEpisodeError = null;
 
         try {
-            const response = await fetch(`https://api.consumet.org/meta/anilist/watch/${episodeId}?provider=zoro`, {
+            const response = await fetch(`https://api.consumet.org/meta/anilist/watch/${episodeId}?provider=gogoanime`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +77,7 @@
             const { sources, subtitles } = await response.json();
             state.openedEpisode = {
                 id: episodeId,
-                source: (sources || []).find(source => source.isM3U8 && source.quality === 'auto'),
+                source: (sources || []).find(source => source.isM3U8 && source.quality === 'default'),
                 tracks: (subtitles || []).filter(track => track.lang !== 'Thumbnails').map(track => ({
                     url: track.url,
                     kind: 'subtitles',
