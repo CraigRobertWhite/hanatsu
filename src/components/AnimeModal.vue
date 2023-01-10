@@ -77,7 +77,7 @@
             const { sources, subtitles } = await response.json();
             state.openedEpisode = {
                 id: episodeId,
-                source: (sources || []).find(source => source.isM3U8 && source.quality === 'default'),
+                source: (sources || [undefined]).filter(source => source.isM3U8)[0],
                 tracks: (subtitles || []).filter(track => track.lang !== 'Thumbnails').map(track => ({
                     url: track.url,
                     kind: 'subtitles',
