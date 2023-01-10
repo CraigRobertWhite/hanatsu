@@ -75,9 +75,21 @@
                 },
             });
             const { sources, subtitles } = await response.json();
+
+            const preferred_source = (() => {
+                for (const quality of ['1080p', 'default', 'backup', '720p', '480p', '360p']) {
+                    const matching_source = sources.find(source => source.isM3U8 && source.quality === quality);
+                    if (matching_source) return matching_source;
+                }
+            })();
+
+            if (!preferred_source) {
+                throw Error('Failed to find valid source for video')
+            }
+
             state.openedEpisode = {
                 id: episodeId,
-                source: (sources || [undefined]).filter(source => source.isM3U8)[0],
+                source: preferred_source,
                 tracks: (subtitles || []).filter(track => track.lang !== 'Thumbnails').map(track => ({
                     url: track.url,
                     kind: 'subtitles',
@@ -86,9 +98,6 @@
                     'default': track.lang === 'English',
                 })),
             };
-            if (!state.openedEpisode.source) {
-                throw Error('Failed to find valid source for video')
-            }
         } catch (error) {
             state.loadingEpisodeError = error;
         } finally {
