@@ -1,6 +1,7 @@
 <script setup>
     import { onBeforeMount, onUnmounted, reactive, watch } from 'vue';
     import { faCircleNotch, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+    import auth from '../../auth.js';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import { storageAvailable } from '../../util.js';
 
@@ -87,20 +88,22 @@
         <div v-if="state.loading" class="flex h-[50vh] items-center justify-center">
             <FontAwesomeIcon :icon="faCircleNotch" size="2xl" class="text-red-600 animate-spin" />
         </div>
-        <div v-else-if="state.loadingError" class="h-[50vh] flex flex-col items-center justify-center text-white">
+        <div v-else-if="state.loadingError" class="h-[50vh] flex flex-col items-center justify-center">
             <FontAwesomeIcon :icon="faTriangleExclamation" size="2xl" class="text-red-600" />
             <h6 class="sm:text-xl font-medium mt-2 mb-4">An error occurred</h6>
             <code>{{ state.loadingError }}</code>
         </div>
         <div v-else>
+            <h1 v-if="auth.user.value" class="fa-2x mb-12">Welcome {{ auth.user.value.name }}</h1>
+
             <article v-for="(category, name) in state.categories" :key="name" class="mb-12">
-                <h4 class="text-2xl font-medium text-white mb-4">{{ name }}</h4>
+                <h4 class="text-2xl font-medium mb-4">{{ name }}</h4>
                 <section class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 place-items-center gap-4">
                     <figure
                         v-for="anime in category"
                         :key="anime.id"
                         @click="$emit('update:openedAnimeId', anime.id)"
-                        class="h-60 sm:h-80 w-full cursor-pointer rounded-2xl overflow-hidden text-white hover:ring-4
+                        class="h-60 sm:h-80 w-full cursor-pointer rounded-2xl overflow-hidden hover:ring-4
                        hover:ring-neutral-600 bg-cover flex items-end"
                         :style="{ backgroundImage: `url(${anime.image})` }"
                     >
