@@ -68,7 +68,7 @@
         state.loadingEpisodeError = null;
 
         try {
-            const response = await fetch(`https://api.consumet.org/meta/anilist/watch/${episodeId}?provider=gogoanime`, {
+            const response = await fetch(`https://api.consumet.org/anime/gogoanime/watch/${episodeId}?server=gogocdn`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
